@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.addOrUpdateUserNotApproved(user);
 	}
 
-	public long addAddress(Address address, long userId) {
+	public long addAddress(Address address) {
 		// TODO Auto-generated method stub
-		return userRepository.addAddress(address, userId);
+		return userRepository.addAddress(address);
 	}
 
 	public User fetchUserUsingEmailAndPassword(String email, String password) {

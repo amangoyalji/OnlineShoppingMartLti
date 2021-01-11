@@ -32,11 +32,9 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Transactional
-	public long addAddress(Address address,long userId) {
+	public long addAddress(Address address) {
 		// TODO Auto-generated method stub
-		User usr = fetchUserById(userId);
 		Address a = em.merge(address);
-		a.setUser(usr);
 		return a.getAddressId();
 	}
  
