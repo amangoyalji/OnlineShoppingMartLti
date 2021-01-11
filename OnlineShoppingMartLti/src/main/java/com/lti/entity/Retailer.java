@@ -22,7 +22,7 @@ public class Retailer {
 	String retailerPhoneNo;
 	String retailerEmail;
 	String retailerPassword;
-	String retailerApproved;
+	boolean retailerApproved;
 	
 	@OneToMany(mappedBy = "retailer",cascade = CascadeType.ALL)
 	List<Product> product;
@@ -67,11 +67,11 @@ public class Retailer {
 		this.retailerPassword = retailerPassword;
 	}
 
-	public String getRetailerApproved() {
+	public boolean getRetailerApproved() {
 		return retailerApproved;
 	}
 
-	public void setRetailerApproved(String retailerApproved) {
+	public void setRetailerApproved(boolean retailerApproved) {
 		this.retailerApproved = retailerApproved;
 	}
 
