@@ -14,7 +14,7 @@ public interface UserService {
 
 	long addOrUpdateUserNotApproved(User user);
 
-	long addAddress(Address address, long userId);
+	long addAddress(Address address);
 
 	User fetchUserUsingEmailAndPassword(String email, String password);
 
