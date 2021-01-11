@@ -22,7 +22,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	
 	@Transactional
 	public Retailer approveRetailer(Retailer retailer) {
-		retailer.setRetailerApproved("Approved");
+		retailer.setRetailerApproved(false);
 		Retailer r= em.merge(retailer);
 		return r;
 	}

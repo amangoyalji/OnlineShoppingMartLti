@@ -23,5 +23,12 @@ public class RetailerServiceImpl implements RetailerService {
 		// TODO Auto-generated method stub
 		return retailerRepository.fetchRetailerbyId(retailerId);
 	}
+	
+	@Override
+	public long retailerLogin(String retailerEmail, String retailerPassword) {
+		// TODO Auto-generated method stub
+		return retailerRepository.retailerLogin(retailerEmail, retailerPassword);
+	}
+
 
 }

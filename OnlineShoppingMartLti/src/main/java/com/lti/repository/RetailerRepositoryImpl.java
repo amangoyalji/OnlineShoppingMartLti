@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class RetailerRepositoryImpl implements RetailerRepository {
 	@Transactional
 	public Retailer addorUpdateRetailer(Retailer retailer) {
 		// TODO Auto-generated method stub
+		retailer.setRetailerApproved(false);
 		Retailer r=em.merge(retailer);
 		return r;
 	}
@@ -50,6 +52,23 @@ public class RetailerRepositoryImpl implements RetailerRepository {
 		Retailer r = em.find(Retailer.class, retailerId);
 		List<Product> listofproduct = r.getProduct();
 		return listofproduct;
+	}
+
+	@Transactional
+	public long retailerLogin(String retailerEmail, String retailerPassword) {
+		// TODO Auto-generated method stub
+		
+		String jpql="select r from Retailer r where retailerEmail=:email and retailerPassword=:pass";
+		try {
+			Query query=em.createQuery(jpql);
+			query.setParameter("email", retailerEmail);
+			query.setParameter("pass", retailerPassword);
+			Retailer r=(Retailer) query.getSingleResult();
+			return r.getRetailerId();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return 0;
+		}
 	}
 
 }

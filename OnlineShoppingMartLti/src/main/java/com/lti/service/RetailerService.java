@@ -6,5 +6,5 @@ import com.lti.entity.Retailer;
 public interface RetailerService {
 	Retailer addorUpdateRetailer(Retailer retailer);
 	Retailer fetchRetailerbyId(long retailerId);
-
+	long retailerLogin(String retailerEmail,String retailerPassword);
 }
