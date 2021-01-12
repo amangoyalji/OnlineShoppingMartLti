@@ -111,4 +111,6 @@ public class RetailerResource {
 			return retailerService.addorUpdateRetailer(retailer).getRetailerId();
 	}
 	
+	
+	
 }

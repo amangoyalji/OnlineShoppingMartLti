@@ -3,6 +3,7 @@ package com.lti.resource;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ProductDetails;
+import com.lti.entity.Category;
 import com.lti.entity.Product;
+import com.lti.service.CategoryService;
 import com.lti.service.ProductService;
 
 
@@ -28,6 +31,9 @@ public class ProductResource {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	@RequestMapping(value = "/addProducts", method =RequestMethod.POST)
 	public Product addProduct(@RequestBody Product product) {
@@ -82,6 +88,49 @@ public class ProductResource {
 		}
 		
 		return product;
+	}
+	
+	
+	@RequestMapping(value = "/addCategory", method =RequestMethod.POST)
+	public Category addCategory(@RequestBody Category category) {
+		Category  c = categoryService.addorupdateCategory(category);
+		return c;
+	}
+	
+	
+	@GetMapping("/productByCategoryId")
+	public List<Product> viewProductsByCategoryId(@RequestParam("categoryId") int categoryId,HttpServletRequest request) {
+		List<Product> products = productService.fetchProductbyCategoryId(categoryId);
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "D:/uploads/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		
+		
+		
+		
+		return products;
 	}
 
 }
