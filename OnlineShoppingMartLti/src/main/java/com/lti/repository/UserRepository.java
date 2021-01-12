@@ -17,7 +17,7 @@ public interface UserRepository {
 	long addProductInItems(Items items);
     long placeOrder(Order order);
 	long addOrUpdateUserNotApproved(User user);
-		long addAddress(Address address,long userId);
+		long addAddress(Address address);
 		User fetchUserUsingEmailAndPassword(String email,String password);
 		User fetchUserById(long userId);
 		long addToCart(Cart cart);
