@@ -61,4 +61,22 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.fetchProductbyProductbyName(productName);
 	}
 
+	@Override
+	public List<Product> fetchProductbyCategoryName(String categoryName) {
+		// TODO Auto-generated method stub
+		return productRepository.fetchProductbyCategoryName(categoryName);
+	}
+
+	@Override
+	public List<Product> fetchProductbyPriceHightoLow() {
+		// TODO Auto-generated method stub
+		return productRepository.fetchProductbyPriceHightoLow();
+	}
+
+	@Override
+	public List<Product> fetchProductbyPriceLowtoHigh() {
+		// TODO Auto-generated method stub
+		return productRepository.fetchProductbyPriceLowtoHigh();
+	}
+
 }

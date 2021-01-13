@@ -16,6 +16,7 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 	@Transactional
 	public Category addorupdateCategory(Category category) {
 		// TODO Auto-generated method stub
+		category.setCategoryName(category.getCategoryName().toLowerCase());
 		Category c=em.merge(category);
 		return c;
 	}

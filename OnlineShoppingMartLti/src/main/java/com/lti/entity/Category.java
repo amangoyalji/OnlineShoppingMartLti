@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "shop_category")
 public class Category {
@@ -22,6 +24,7 @@ public class Category {
 	String categoryName;
 	
 	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+	//@JsonIgnore
 	List<Product> product;
 
 	public long getCategoryId() {

@@ -12,4 +12,7 @@ public interface ProductService {
 	List<Product> fetchProductbyCategoryId(long categoryId);
 	List<Product> fetchProductbyPrice(double minPrice,double maxPrice);
 	List<Product> fetchProductbyBrand(String Brand);
+	List<Product> fetchProductbyCategoryName(String categoryName);
+	List<Product> fetchProductbyPriceHightoLow();
+	List<Product> fetchProductbyPriceLowtoHigh();
 }
