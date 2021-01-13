@@ -40,8 +40,10 @@ public class RetailerResource {
 	public long addorUpdateProductbyRetailer(@RequestBody ProductDto productdto)
 	{
 		Product p=new Product();
+		System.out.println(productdto.getCategoryId());
 		Retailer r=retailerService.fetchRetailerbyId(productdto.getRetailerId());
 		Category c=categoryService.fetchCategorybyId(productdto.getCategoryId());
+		System.out.println(c.getCategoryName());
 		p.setApproved(productdto.isApproved());
 		p.setBrand(productdto.getBrand());
 		p.setCategory(c);
@@ -110,7 +112,4 @@ public class RetailerResource {
 			//retailer.setRetailerApproved(false);
 			return retailerService.addorUpdateRetailer(retailer).getRetailerId();
 	}
-	
-	
-	
 }

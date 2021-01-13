@@ -126,11 +126,8 @@ public class ProductResource {
 			
 		}
 		
-		
-		
-		
-		
 		return products;
 	}
+	
 
 }

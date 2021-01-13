@@ -30,6 +30,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	@Transactional
 	public Product approveProduct(Product product) {
 		product.setApproved(true);
+		product.getCategory();
 		Product p = em.merge(product);
 		return p;
 	}
