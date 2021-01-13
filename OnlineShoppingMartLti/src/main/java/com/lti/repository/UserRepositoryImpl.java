@@ -159,6 +159,39 @@ public class UserRepositoryImpl implements UserRepository {
 		return query.getResultList();
 	}
 	
+	@Transactional
+	public long removeFromCart(Cart cart) {
+		// TODO Auto-generated method stub
+		em.remove(em.contains(cart) ? cart : em.merge(cart));
+		return cart.getCartId();
+	}
+
+	@Transactional
+	public long removeFromWishList(WishList wish) {
+		// TODO Auto-generated method stub
+		em.remove(wish);
+		return wish.getWishId();
+	}
+
+	@Transactional
+	public Cart viewCartByProductId(long productId) {
+		// TODO Auto-generated method stub
+		String jpql = "select c from Cart c where c.productId=:pid";
+		TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
+		query.setParameter("pid", productId );
+		return query.getSingleResult();
+	
+	}
+
+	@Transactional
+	public WishList viewWishListByProductId(long productId) {
+		// TODO Auto-generated method stub
+		String jpql = "select w from WishList w where w.productId=:pid";
+		TypedQuery<WishList> query = em.createQuery(jpql,WishList.class);
+		query.setParameter("pid", productId );
+		return query.getSingleResult();
+		
+	}
 	
 
 }

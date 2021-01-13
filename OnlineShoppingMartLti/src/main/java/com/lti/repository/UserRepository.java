@@ -31,5 +31,9 @@ public interface UserRepository {
 	    Cart findCartById(long cartId);
 	    List<Cart> viewCartByUserId(long userId);
 	    List<WishList> viewWishListByUserId(long userId);
+	    long removeFromCart(Cart cart);
+	    long removeFromWishList(WishList wish);
+	    Cart viewCartByProductId(long productId);
+	    WishList viewWishListByProductId(long productId);
 	   
 }
