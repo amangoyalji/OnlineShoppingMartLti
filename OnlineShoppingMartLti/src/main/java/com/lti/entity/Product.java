@@ -92,7 +92,7 @@ public class Product {
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
-	
+
 	@JsonIgnore
 	public Category getCategory() {
 		return category;
@@ -101,7 +101,7 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
 	@JsonIgnore
 	public Retailer getRetailer() {
 		return retailer;

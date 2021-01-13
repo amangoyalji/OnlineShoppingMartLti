@@ -45,8 +45,10 @@ public class RetailerResource {
 	public long addorUpdateProductbyRetailer(@RequestBody ProductDto productdto)
 	{
 		Product p=new Product();
+		System.out.println(productdto.getCategoryId());
 		Retailer r=retailerService.fetchRetailerbyId(productdto.getRetailerId());
 		Category c=categoryService.fetchCategorybyId(productdto.getCategoryId());
+		System.out.println(c.getCategoryName());
 		p.setApproved(productdto.isApproved());
 		p.setBrand(productdto.getBrand());
 		p.setCategory(c);
@@ -108,7 +110,7 @@ public class RetailerResource {
 			String targetFile = tempDownloadPath+product.getPath();
 			System.out.println(tempDownloadPath);
 			
-			String uploadedImagesPath = "G:/upload/";
+			String uploadedImagesPath = "D:/uploads/";
 			String sourceFile = uploadedImagesPath+product.getPath();
 			
 			try {
@@ -161,7 +163,7 @@ public class RetailerResource {
 			String targetFile = tempDownloadPath+product.getPath();
 			System.out.println(tempDownloadPath);
 			
-			String uploadedImagesPath = "G:/upload/";
+			String uploadedImagesPath = "D:/uploads/";
 			String sourceFile = uploadedImagesPath+product.getPath();
 			
 			try {
@@ -195,7 +197,7 @@ public class RetailerResource {
 			String targetFile = tempDownloadPath+product.getPath();
 			System.out.println(tempDownloadPath);
 			
-			String uploadedImagesPath = "G:/upload/";
+			String uploadedImagesPath = "D:/uploads/";
 			String sourceFile = uploadedImagesPath+product.getPath();
 			
 			try {
@@ -228,7 +230,7 @@ public class RetailerResource {
 			String targetFile = tempDownloadPath+product.getPath();
 			System.out.println(tempDownloadPath);
 			
-			String uploadedImagesPath = "G:/upload/";
+			String uploadedImagesPath = "D:/uploads/";
 			String sourceFile = uploadedImagesPath+product.getPath();
 			
 			try {

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.entity.Admin;
+import com.lti.entity.Product;
 import com.lti.service.AdminService;
+import com.lti.service.ProductService;
 
 @RestController
 @CrossOrigin
@@ -18,6 +20,9 @@ public class AdminResource {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping(path = "/findAdminById/{adminId}")
 	public Admin findAdminById(@PathVariable("adminId") long adminId) {
@@ -33,6 +38,13 @@ public class AdminResource {
 	@GetMapping(path = "/loginAdmin/{emailId}/{password}")
 	public Admin findAdminById(@PathVariable("emailId") String emailId, @PathVariable("password") String password) {
 		return adminService.loginAdmin(emailId, password);
+	}
+	
+	@GetMapping(value = "/approveProduct/{productId}")
+	public Product approveProduct(@PathVariable long productId) {
+		Product product = productService.fetchProductbyProductId(productId);
+		Product p = adminService.approveProduct(product);
+		return p;
 	}
 
 }
