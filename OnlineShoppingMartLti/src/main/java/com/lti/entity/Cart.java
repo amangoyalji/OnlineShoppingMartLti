@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="shop_cart")
 public class Cart {
@@ -23,13 +25,30 @@ public class Cart {
 	long quantity;
 	double totalPrice;
 	long productId;
-	
+	String productName;
+	String path;
 	@OneToOne
 	@JoinColumn(name="userId")
 	User user;
    
 	
 	
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public long getCartId() {
 		return cartId;
 	}
@@ -54,6 +73,7 @@ public class Cart {
 		this.totalPrice = totalPrice;
 	}
 
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}

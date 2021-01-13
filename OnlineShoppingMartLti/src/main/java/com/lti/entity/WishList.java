@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="shop_wish")
 public class WishList {
@@ -18,10 +20,30 @@ public class WishList {
 	@GeneratedValue
 	long wishId;
 	long productId;
+	String productName;
+	String path;
 	
 	@OneToOne
+	@JsonIgnore
 	User user;
 	
+	
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public long getWishId() {
 		return wishId;
 	}

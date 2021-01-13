@@ -161,5 +161,6 @@ public class UserRepositoryImpl implements UserRepository {
 		return query.getResultList();
 	}
 	
+	
 
 }
