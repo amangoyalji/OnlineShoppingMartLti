@@ -106,4 +106,23 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.viewWishListByUserId(userId);
 	}
+	public long removeFromCart(Cart cart) {
+		// TODO Auto-generated method stub
+		return userRepository.removeFromCart(cart);
+	}
+
+	public long removeFromWishList(WishList wish) {
+		// TODO Auto-generated method stub
+		return userRepository.removeFromWishList(wish);
+	}
+
+	public Cart viewCartByProductId(long productId) {
+		// TODO Auto-generated method stub
+		return userRepository.viewCartByProductId(productId);
+	}
+
+	public WishList viewWishListByProductId(long productId) {
+		// TODO Auto-generated method stub
+		return userRepository.viewWishListByProductId(productId);
+	}
 }

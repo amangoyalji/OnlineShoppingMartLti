@@ -43,4 +43,8 @@ public interface UserService {
 	List<Cart> viewCartByUserId(long userId);
 
 	List<WishList> viewWishListByUserId(long userId);
+	long removeFromCart(Cart cart);
+    long removeFromWishList(WishList wish);
+    Cart viewCartByProductId(long productId);
+    WishList viewWishListByProductId(long productId);
 }
