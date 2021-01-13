@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="shop_product")
 public class Product {
@@ -90,7 +92,8 @@ public class Product {
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
-
+	
+	@JsonIgnore
 	public Category getCategory() {
 		return category;
 	}
@@ -98,7 +101,8 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
+	
+	@JsonIgnore
 	public Retailer getRetailer() {
 		return retailer;
 	}

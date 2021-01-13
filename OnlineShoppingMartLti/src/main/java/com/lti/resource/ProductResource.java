@@ -38,7 +38,7 @@ public class ProductResource {
 	@PostMapping(value = "/uploadProductPic")
 	public Product uploadProduct(ProductDetails productDetails) {
 		long productId = productDetails.getProductId();
-		String imgUploadLocation = "D:/uploads/";
+		String imgUploadLocation = "G:/upload/";
 		String uploadedFileName = productDetails.getPath().getOriginalFilename();
 		String newFileName = productId + "-" + uploadedFileName;
 		String targetFileName = imgUploadLocation + newFileName;
@@ -70,7 +70,7 @@ public class ProductResource {
 		String targetFile = tempDownloadPath+product.getPath();
 		System.out.println(tempDownloadPath);
 		
-		String uploadedImagesPath = "D:/uploads/";
+		String uploadedImagesPath = "G:/upload/";
 		String sourceFile = uploadedImagesPath+product.getPath();
 		
 		try {

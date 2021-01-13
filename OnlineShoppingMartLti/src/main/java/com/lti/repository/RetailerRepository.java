@@ -13,4 +13,5 @@ public interface RetailerRepository {
 	Retailer fetchRetailerbyId(long retailerId);
 	List<Product> fetchProductByRetailerId(long retailerId);
 	long retailerLogin(String retailerEmail,String retailerPassword);
+	
 }

@@ -1,10 +1,15 @@
 package com.lti.resource;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,6 +85,7 @@ public class RetailerResource {
 		return productService.fetchProductbyCategoryId(categoryId);
 	}
 	
+	
 	@GetMapping(value="/productbyBrandname/{brandName}")
 	public List<Product> fetchProductbyBrandName(@PathVariable String brandName)	
 	{
@@ -87,9 +93,36 @@ public class RetailerResource {
 	}
 	
 	@GetMapping(value="/productbyPrice/{minPrice}/{maxPrice}")
-	public List<Product> fetchProductbyPrice(@PathVariable double minPrice,@PathVariable double maxPrice)	
+	public List<Product> fetchProductbyPrice(@PathVariable double minPrice,@PathVariable double maxPrice,HttpServletRequest request)	
 	{
-		return productService.fetchProductbyPrice(minPrice, maxPrice);
+		List<Product> products = productService.fetchProductbyPrice(minPrice, maxPrice);
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "G:/upload/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		return products;
+		//return productService.fetchProductbyPrice(minPrice, maxPrice);
 	}
 	
 //	@GetMapping(value="/productbyCategoryId/{categoryId}")
@@ -109,6 +142,106 @@ public class RetailerResource {
 	{
 			//retailer.setRetailerApproved(false);
 			return retailerService.addorUpdateRetailer(retailer).getRetailerId();
+	}
+	
+	@GetMapping(value="/fetchproductbycategoryname/{categoryName}")
+	public List<Product> fetchProductByCategoryName(@PathVariable String categoryName,HttpServletRequest request)
+	{
+		
+		List<Product> products = productService.fetchProductbyCategoryName(categoryName);
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "G:/upload/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		return products;
+		//return productService.fetchProductbyCategoryName(categoryName.toLowerCase());
+	}
+	
+	@GetMapping(value="/pricehightolow")
+	public List<Product> fetchProductbyPriceHightoLow(HttpServletRequest request)
+	{
+
+		List<Product> products = productService.fetchProductbyPriceHightoLow();
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "G:/upload/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		return products;
+	}
+	
+	@GetMapping(value="/pricelowtohigh")
+	public List<Product> fetchProductbyPriceLowtoHigh(HttpServletRequest request)
+	{
+
+		List<Product> products = productService.fetchProductbyPriceLowtoHigh();
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "G:/upload/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		return products;
 	}
 	
 }

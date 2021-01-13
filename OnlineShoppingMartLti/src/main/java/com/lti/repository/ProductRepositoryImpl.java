@@ -86,4 +86,32 @@ public class ProductRepositoryImpl implements ProductRepository {
 		return p;
 	}
 
+	@Transactional
+	public List<Product> fetchProductbyCategoryName(String categoryName) {
+		// TODO Auto-generated method stub
+		String jpql="select c from Category c where categoryName=:cn";
+		Query query=em.createQuery(jpql);
+		query.setParameter("cn",categoryName);
+		Category c=(Category) query.getSingleResult();
+		return c.getProduct();
+	}
+
+	@Transactional
+	public List<Product> fetchProductbyPriceHightoLow() {
+		// TODO Auto-generated method stub
+		String jpql="select p from Product p order by productPrice desc";
+		Query query=em.createQuery(jpql);
+		List<Product> p=(List<Product>) query.getResultList();
+		return p;
+	}
+
+	@Transactional
+	public List<Product> fetchProductbyPriceLowtoHigh() {
+		// TODO Auto-generated method stub
+		String jpql="select p from Product p order by productPrice";
+		Query query=em.createQuery(jpql);
+		List<Product> p=(List<Product>) query.getResultList();
+		return p;
+	}
+
 }
