@@ -1,11 +1,15 @@
 package com.lti.dto;
 
+import java.util.List;
+
+import com.lti.entity.Product;
+
 public class CartDto {
 
 	long userId;
-	long productId;
-	long quantity;
-	double totalPrice;
+	List<Product> products;
+	List<Integer> quantity;
+	//double totalPrice;
 	
 	
 	
@@ -28,24 +32,17 @@ public class CartDto {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public long getProductId() {
-		return productId;
+	public List<Product> getProducts() {
+		return products;
 	}
-	public void setProductId(long productId) {
-		this.productId = productId;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
-	public long getQuantity() {
+	public List<Integer> getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(long quantity) {
+	public void setQuantity(List<Integer> quantity) {
 		this.quantity = quantity;
-	}
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-	
+	}	
 	
 }

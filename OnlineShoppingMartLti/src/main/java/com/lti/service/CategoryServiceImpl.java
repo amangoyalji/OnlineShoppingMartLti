@@ -21,5 +21,11 @@ public class CategoryServiceImpl implements CategoryService {
 		// TODO Auto-generated method stub
 		return categoryRepository.fetchCategorybyId(categoryId);
 	}
+	
+	@Override
+	public Category fetchCategoryIdbyName(String name) {
+		// TODO Auto-generated method stub
+		return categoryRepository.fetchCategoryIdbyName(name);
+	}
 
 }

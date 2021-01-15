@@ -6,5 +6,6 @@ public interface CategoryRepository {
 
 	Category addorupdateCategory(Category category);
 	Category fetchCategorybyId(long categoryId);
+	Category fetchCategoryIdbyName(String name);
 	
 }

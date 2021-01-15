@@ -1,5 +1,7 @@
 package com.lti.resource;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.entity.Admin;
 import com.lti.entity.Product;
+import com.lti.entity.Retailer;
+import com.lti.entity.User;
 import com.lti.service.AdminService;
 import com.lti.service.ProductService;
+import com.lti.service.RetailerService;
+import com.lti.service.UserService;
 
 @RestController
 @CrossOrigin
@@ -23,6 +29,12 @@ public class AdminResource {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	RetailerService retailerService;
+	
+	@Autowired
+	UserService userService;
 	
 	@GetMapping(path = "/findAdminById/{adminId}")
 	public Admin findAdminById(@PathVariable("adminId") long adminId) {
@@ -45,6 +57,35 @@ public class AdminResource {
 		Product product = productService.fetchProductbyProductId(productId);
 		Product p = adminService.approveProduct(product);
 		return p;
+	}
+	
+	@GetMapping(value = "/approveRetailer/{retailerId}")
+	public Retailer approveRetailer(@PathVariable long retailerId) {
+		Retailer retailer = retailerService.fetchRetailerbyId(retailerId);
+		Retailer r = adminService.approveRetailer(retailer);
+		return r;
+	}
+	
+	@GetMapping(value = "/approveUser/{userId}")
+	public User approveUser(@PathVariable long userId) {
+		User user = userService.fetchUserById(userId);
+		User u = adminService.approveUser(user);
+		return u;
+	}
+	
+	@GetMapping(value="/notapprovedproducts")
+	public List<Product> notApprovedProducts(){
+		return adminService.fetchProductNotApproved();
+	}
+	
+	@GetMapping(value="/notapprovedretailers")
+	public List<Retailer> notApprovedRetailers(){
+		return adminService.fetcRetailerNotApproved();
+	}
+	
+	@GetMapping(value="/notapprovedusers")
+	public List<User> notApprovedUsers(){
+		return adminService.fetchUserNotApproved();
 	}
 
 }

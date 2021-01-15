@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.CartDto;
 import com.lti.dto.WishDto;
 import com.lti.entity.Cart;
+import com.lti.entity.Items;
+import com.lti.entity.Order;
 import com.lti.entity.Product;
 import com.lti.entity.User;
 import com.lti.entity.WishList;
@@ -69,20 +72,20 @@ public class UserResource {
 
 	}
 	
-	@RequestMapping(value = "/addToCart", method = RequestMethod.POST)
-	public long addToCart(@RequestBody CartDto c) {
-		// TODO Auto-generated method stub
-		Cart cart = new Cart();
-		Product p = productService.fetchProductbyProductId(c.getProductId());
-		cart.setProductId(p.getProductId());
-		User u = userService.fetchUserById(c.getUserId());
-		cart.setUser(u);
-		cart.setQuantity(c.getQuantity());
-	   cart.setProductName(p.getProductName());
-	   cart.setPath(p.getPath());
-		cart.setTotalPrice(p.getProductPrice()*cart.getQuantity());
-		return userService.addToCart(cart);
-	}
+//	@RequestMapping(value = "/addToCart", method = RequestMethod.POST)
+//	public long addToCart(@RequestBody CartDto c) {
+//		// TODO Auto-generated method stub
+//		Cart cart = new Cart();
+//		Product p = productService.fetchProductbyProductId(c.getProductId());
+//		cart.setProductId(p.getProductId());
+//		User u = userService.fetchUserById(c.getUserId());
+//		cart.setUser(u);
+//		cart.setQuantity(c.getQuantity());
+//	   cart.setProductName(p.getProductName());
+//	   cart.setPath(p.getPath());
+//		cart.setTotalPrice(p.getProductPrice()*cart.getQuantity());
+//		return userService.addToCart(cart);
+//	}
 	
 	@GetMapping(value = "/removeFromCart/{productId}")
 	public long removeFromCart(@PathVariable("productId") long productId){
@@ -90,6 +93,39 @@ public class UserResource {
 		return userService.removeFromCart(c);
 		//System.out.println("Item Removed from cart");
     }
+	
+	@GetMapping(value = "/viewUser/{userId}")
+	public User viewUserByUserId(@PathVariable("userId") long userId){
+		return userService.fetchUserById(userId);
+	}
+	
+	@PostMapping(value="/placeOrder")
+	public long addOrderandOrderdetails(@RequestBody CartDto cartdto)
+	{
+		Order o=new Order();
+		User user=userService.fetchUserById(cartdto.getUserId());
+		o.setUser(user);
+		long oid=userService.placeOrder(o);
+//		=o.getOrderId();
+		Items i=new Items();
+		int j=0;
+		
+		List<Integer> quantity=cartdto.getQuantity();
+		
+		for(Product p:cartdto.getProducts())
+		{
+			i.setOrderId(oid);
+			i.setPrice(p.getProductPrice());
+			i.setProductId(p.getProductId());
+			i.setQuantity(quantity.get(j++));
+			//i.setQuantity(p.getQuantity());
+			i.setUserId(user.getUserId());
+			
+			userService.addProductInItems(i);
+		}
+		
+		return oid;
+	}
 	
 	
 	

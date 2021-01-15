@@ -28,9 +28,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> fetchProductbyPrice(double minPrice, double maxPrice) {
+	public List<Product> fetchProductbyPrice(double minPrice, double maxPrice,long cid) {
 		// TODO Auto-generated method stub
-		List<Product> product=productRepository.fetchProductbyPrice(minPrice, maxPrice);
+		List<Product> product=productRepository.fetchProductbyPrice(minPrice, maxPrice,cid);
 		return product;
 	}
 
@@ -68,15 +68,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> fetchProductbyPriceHightoLow() {
+	public List<Product> fetchProductbyPriceHightoLow(long cid) {
 		// TODO Auto-generated method stub
-		return productRepository.fetchProductbyPriceHightoLow();
+		return productRepository.fetchProductbyPriceHightoLow(cid);
 	}
 
 	@Override
-	public List<Product> fetchProductbyPriceLowtoHigh() {
+	public List<Product> fetchProductbyPriceLowtoHigh(long cid) {
 		// TODO Auto-generated method stub
-		return productRepository.fetchProductbyPriceLowtoHigh();
+		return productRepository.fetchProductbyPriceLowtoHigh(cid);
 	}
 
 }

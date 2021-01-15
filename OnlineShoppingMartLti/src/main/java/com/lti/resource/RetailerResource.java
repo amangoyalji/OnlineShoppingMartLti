@@ -94,10 +94,11 @@ public class RetailerResource {
 		return productService.fetchProductbyBrand(brandName);
 	}
 	
-	@GetMapping(value="/productbyPrice/{minPrice}/{maxPrice}")
-	public List<Product> fetchProductbyPrice(@PathVariable double minPrice,@PathVariable double maxPrice,HttpServletRequest request)	
+	@GetMapping(value="/productbyPrice/{minPrice}/{maxPrice}/{categoryName}")
+	public List<Product> fetchProductbyPrice(@PathVariable double minPrice,@PathVariable double maxPrice,@PathVariable String categoryName,HttpServletRequest request)	
 	{
-		List<Product> products = productService.fetchProductbyPrice(minPrice, maxPrice);
+		long cId=categoryService.fetchCategoryIdbyName(categoryName).getCategoryId();
+		List<Product> products = productService.fetchProductbyPrice(minPrice, maxPrice,cId);
 		for(Product product:products) {
 			
 			String projPath = request.getServletContext().getRealPath("/");
@@ -180,11 +181,11 @@ public class RetailerResource {
 		//return productService.fetchProductbyCategoryName(categoryName.toLowerCase());
 	}
 	
-	@GetMapping(value="/pricehightolow")
-	public List<Product> fetchProductbyPriceHightoLow(HttpServletRequest request)
+	@GetMapping(value="/pricehightolow/{categoryName}")
+	public List<Product> fetchProductbyPriceHightoLow(@PathVariable String categoryName, HttpServletRequest request)
 	{
-
-		List<Product> products = productService.fetchProductbyPriceHightoLow();
+		long cId=categoryService.fetchCategoryIdbyName(categoryName).getCategoryId();
+		List<Product> products = productService.fetchProductbyPriceHightoLow(cId);
 		for(Product product:products) {
 			
 			String projPath = request.getServletContext().getRealPath("/");
@@ -213,11 +214,11 @@ public class RetailerResource {
 		return products;
 	}
 	
-	@GetMapping(value="/pricelowtohigh")
-	public List<Product> fetchProductbyPriceLowtoHigh(HttpServletRequest request)
+	@GetMapping(value="/pricelowtohigh/{categoryName}")
+	public List<Product> fetchProductbyPriceLowtoHigh(@PathVariable String categoryName,HttpServletRequest request)
 	{
-
-		List<Product> products = productService.fetchProductbyPriceLowtoHigh();
+		long cId=categoryService.fetchCategoryIdbyName(categoryName).getCategoryId();
+		List<Product> products = productService.fetchProductbyPriceLowtoHigh(cId);
 		for(Product product:products) {
 			
 			String projPath = request.getServletContext().getRealPath("/");
@@ -244,6 +245,48 @@ public class RetailerResource {
 		}
 		
 		return products;
+	}
+	
+	
+	
+	@GetMapping(value="/categoryId/{cn}")
+	public long fetchCategoryidbyName(@PathVariable String cn)
+	{
+		return categoryService.fetchCategoryIdbyName(cn).getCategoryId();
+	}
+	
+	@GetMapping(value="/fetchproductbyretailerId/{retailerId}")
+	public List<Product> fetchProductByRetailierId(@PathVariable long retailerId,HttpServletRequest request)
+	{
+		
+		List<Product> products = retailerService.fetchProductByRetailerId(retailerId);
+		for(Product product:products) {
+			
+			String projPath = request.getServletContext().getRealPath("/");
+			String tempDownloadPath = projPath+"/downloads/";
+			
+			File f = new File(tempDownloadPath);
+			if(!f.exists())
+				f.mkdir();
+			
+			String targetFile = tempDownloadPath+product.getPath();
+			System.out.println(tempDownloadPath);
+			
+			String uploadedImagesPath = "D:/uploads/";
+			String sourceFile = uploadedImagesPath+product.getPath();
+			
+			try {
+				FileCopyUtils.copy(new File(sourceFile), new File(targetFile));
+				System.out.println("done");
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("not done");
+			}
+			
+		}
+		
+		return products;
+		//return productService.fetchProductbyCategoryName(categoryName.toLowerCase());
 	}
 	
 }

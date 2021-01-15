@@ -15,12 +15,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="shop_user")
+@Table(name="shop_new_user")
 public class User {
 	
 	@Id
-	@SequenceGenerator(name="seq_newuser",initialValue=1,allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_newuser")
+	@SequenceGenerator(name="seq_new_user",initialValue=511,allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_new_user")
 	long userId;
 	String userName;
 	String phoneNo;
@@ -31,16 +31,15 @@ public class User {
 	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
 	Address address;
 	
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
-	Cart cart;
+	@OneToMany(mappedBy="user")
+	List<Cart> cart;
 	
-	@OneToMany(mappedBy = "user",cascade= CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	List<Order> order;
 	
-	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-	@JsonIgnore
-	WishList wish;
+	@OneToMany(mappedBy = "user")
+	List<WishList> wish;
 
 	public long getUserId() {
 		return userId;
@@ -98,16 +97,17 @@ public class User {
 		this.address = address;
 	}
 
-//	@JsonIgnore
-	public Cart getCart() {
+
+
+	@JsonIgnore
+	public List<Cart> getCart() {
 		return cart;
 	}
 
-	public void setCart(Cart cart) {
+	public void setCart(List<Cart> cart) {
 		this.cart = cart;
 	}
 
-	@JsonIgnore
 	public List<Order> getOrder() {
 		return order;
 	}
@@ -117,13 +117,15 @@ public class User {
 	}
 
 	@JsonIgnore
-	public WishList getWish() {
+	public List<WishList> getWish() {
 		return wish;
 	}
 
-	public void setWish(WishList wish) {
+	public void setWish(List<WishList> wish) {
 		this.wish = wish;
 	}
+
+
 	
 	
 	

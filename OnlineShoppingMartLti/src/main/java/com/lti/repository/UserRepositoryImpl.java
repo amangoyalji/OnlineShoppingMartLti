@@ -69,7 +69,6 @@ public class UserRepositoryImpl implements UserRepository {
 	@Transactional
 	public long addToCart(Cart cart) {
 		Cart c = em.merge(cart);
-		// TODO Auto-generated method stub
 		return c.getCartId();
 	}
 
@@ -176,20 +175,33 @@ public class UserRepositoryImpl implements UserRepository {
 	@Transactional
 	public Cart viewCartByProductId(long productId) {
 		// TODO Auto-generated method stub
-		String jpql = "select c from Cart c where c.productId=:pid";
-		TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
-		query.setParameter("pid", productId );
-		return query.getSingleResult();
+		try {
+			String jpql = "select c from Cart c where c.productId=:pid";
+			TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
+			query.setParameter("pid", productId );
+			return query.getSingleResult();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return null;
+		}
 	
 	}
 
 	@Transactional
 	public WishList viewWishListByProductId(long productId) {
 		// TODO Auto-generated method stub
-		String jpql = "select w from WishList w where w.productId=:pid";
-		TypedQuery<WishList> query = em.createQuery(jpql,WishList.class);
-		query.setParameter("pid", productId );
-		return query.getSingleResult();
+		
+		try {
+			String jpql = "select w from WishList w where w.productId=:pid";
+			TypedQuery<WishList> query = em.createQuery(jpql,WishList.class);
+			query.setParameter("pid", productId );
+			return query.getSingleResult();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return null;
+		}
 		
 	}
 	

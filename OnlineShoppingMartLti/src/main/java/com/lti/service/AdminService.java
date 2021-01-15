@@ -3,6 +3,9 @@ package com.lti.service;
 import com.lti.entity.Product;
 import com.lti.entity.Retailer;
 import com.lti.entity.User;
+
+import java.util.List;
+
 import com.lti.entity.Admin;
 
 public interface AdminService {
@@ -18,5 +21,9 @@ public interface AdminService {
 	Retailer deleteRetailer(long retailerId);
 	Product deleteProduct(long productId);
 	User deleteUser(long userId);
+	
+	List<Product> fetchProductNotApproved();
+	List<Retailer> fetcRetailerNotApproved();
+	List<User> fetchUserNotApproved();
 	
 }

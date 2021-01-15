@@ -1,5 +1,7 @@
 package com.lti.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,20 @@ public class AdminServiceImpl implements AdminService{
 	public Admin fetchAdminById(long adminId) {
 		return adminRepository.fetchAdminById(adminId);
 	}
+	
+	public List<Product> fetchProductNotApproved() {
+		
+		return adminRepository.fetcProductNotApproved();
+	}
+	@Override
+	public List<Retailer> fetcRetailerNotApproved() {
+		return adminRepository.fetcRetailerNotApproved();
+	}
+	@Override
+	public List<User> fetchUserNotApproved() {
+		return adminRepository.fetchUserNotApproved();
+	}
+	
+	
 
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="shop_wish")
+@Table(name="shop_new_wish")
 public class WishList {
 	@Id
 	@GeneratedValue
@@ -23,8 +24,7 @@ public class WishList {
 	String productName;
 	String path;
 	
-	@OneToOne
-	@JsonIgnore
+	@ManyToOne
 	User user;
 	
 	
@@ -52,6 +52,7 @@ public class WishList {
 		this.wishId = wishId;
 	}
 
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}

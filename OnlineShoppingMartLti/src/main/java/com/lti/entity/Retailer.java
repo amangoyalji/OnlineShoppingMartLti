@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="shop_retailer")
 public class Retailer {
@@ -75,6 +77,7 @@ public class Retailer {
 		this.retailerApproved = retailerApproved;
 	}
 
+	@JsonIgnore
 	public List<Product> getProduct() {
 		return product;
 	}

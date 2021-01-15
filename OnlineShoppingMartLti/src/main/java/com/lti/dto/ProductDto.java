@@ -3,7 +3,7 @@ package com.lti.dto;
 import com.lti.entity.Product;
 
 public class ProductDto {
-	
+	long productId;
 	long retailerId;
 	long categoryId;
 	String productName;
@@ -66,6 +66,12 @@ public class ProductDto {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	public long getProductId() {
+		return productId;
+	}
+	public void setProductId(long productId) {
+		this.productId = productId;
 	}
 	
 	

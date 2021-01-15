@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ProductDetails;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Category;
 import com.lti.entity.Product;
 import com.lti.service.CategoryService;
@@ -44,7 +45,7 @@ public class ProductResource {
 	@PostMapping(value = "/uploadProductPic")
 	public Product uploadProduct(ProductDetails productDetails) {
 		long productId = productDetails.getProductId();
-		String imgUploadLocation = "G:/upload/";
+		String imgUploadLocation = "D:/uploads/";
 		String uploadedFileName = productDetails.getPath().getOriginalFilename();
 		String newFileName = productId + "-" + uploadedFileName;
 		String targetFileName = imgUploadLocation + newFileName;
@@ -76,7 +77,7 @@ public class ProductResource {
 		String targetFile = tempDownloadPath+product.getPath();
 		System.out.println(tempDownloadPath);
 		
-		String uploadedImagesPath = "G:/upload/";
+		String uploadedImagesPath = "D:/uploads/";
 		String sourceFile = uploadedImagesPath+product.getPath();
 		
 		try {
@@ -127,6 +128,23 @@ public class ProductResource {
 		}
 		
 		return products;
+	}
+	
+	@RequestMapping(value = "/updateProducts", method =RequestMethod.POST)
+	public Product updateProduct(@RequestBody ProductDto productdto) {
+		long pid=productdto.getProductId();
+		Product p=productService.fetchProductbyProductId(pid);
+		p.setApproved(false);
+		p.setBrand(productdto.getBrand());
+		//p.setCategory(c);
+		p.setPath(productdto.getPath());
+		p.setProductDescription(productdto.getProductDescription());
+		p.setProductName(productdto.getProductName());
+		p.setProductPrice(productdto.getProductPrice());
+		p.setQuantity(productdto.getQuantity());
+		//p.setRetailer(r);
+		//Product p=productService.addorUpdateProductbyRetailer(product);
+		return productService.addorUpdateProductbyRetailer(p);
 	}
 	
 

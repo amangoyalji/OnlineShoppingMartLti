@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
@@ -38,12 +39,15 @@ public class ProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Transactional
-	public List<Product> fetchProductbyPrice(double minPrice, double maxPrice) {
+	public List<Product> fetchProductbyPrice(double minPrice, double maxPrice,long cid) {
 		// TODO Auto-generated method stub
-		String jpql="select p from Product p where productPrice>=:min and productPrice<=:max";
-		Query query=em.createQuery(jpql);
+		
+		
+		String jpql="select p from Product p where productPrice>=:min and productPrice<=:max and category_Id=:c and approved=true";
+		TypedQuery<Product> query= em.createQuery(jpql,Product.class);
 		query.setParameter("min",minPrice);
 		query.setParameter("max",maxPrice);
+		query.setParameter("c", cid);
 		List<Product> p= query.getResultList();
 		return p;
 	}
@@ -89,27 +93,33 @@ public class ProductRepositoryImpl implements ProductRepository {
 	@Transactional
 	public List<Product> fetchProductbyCategoryName(String categoryName) {
 		// TODO Auto-generated method stub
-		String jpql="select c from Category c where categoryName=:cn";
+		//String jpql="select c from Category c where categoryName=:cn";
+		String jpql = "select p from Product p where p.category.categoryName=:cn and approved=1";
 		Query query=em.createQuery(jpql);
 		query.setParameter("cn",categoryName);
-		Category c=(Category) query.getSingleResult();
-		return c.getProduct();
+		List<Product> p = query.getResultList();
+		return p;
+		//Category c=(Category) query.getSingleResult();
+		//return c.getProduct();
 	}
 
 	@Transactional
-	public List<Product> fetchProductbyPriceHightoLow() {
+	public List<Product> fetchProductbyPriceHightoLow(long cid) {
 		// TODO Auto-generated method stub
-		String jpql="select p from Product p order by productPrice desc";
-		Query query=em.createQuery(jpql);
-		List<Product> p=(List<Product>) query.getResultList();
+		String jpql="select p from Product p where category_Id=:c and approved=1 order by productPrice desc";
+		TypedQuery<Product> query= em.createQuery(jpql,Product.class);
+		query.setParameter("c", cid);
+		List<Product> p= query.getResultList();
 		return p;
 	}
 
 	@Transactional
-	public List<Product> fetchProductbyPriceLowtoHigh() {
+	public List<Product> fetchProductbyPriceLowtoHigh(long cid) {
 		// TODO Auto-generated method stub
-		String jpql="select p from Product p order by productPrice";
-		Query query=em.createQuery(jpql);
+		String jpql="select p from Product p where category_Id=:c and approved=true order by productPrice";
+		TypedQuery<Product> query= em.createQuery(jpql,Product.class);
+		//Query query=em.createQuery(jpql);
+		query.setParameter("c", cid);
 		List<Product> p=(List<Product>) query.getResultList();
 		return p;
 	}

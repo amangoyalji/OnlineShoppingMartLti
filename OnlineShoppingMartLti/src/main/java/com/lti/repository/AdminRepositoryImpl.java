@@ -1,7 +1,10 @@
 package com.lti.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -22,7 +25,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	
 	@Transactional
 	public Retailer approveRetailer(Retailer retailer) {
-		retailer.setRetailerApproved(false);
+		retailer.setRetailerApproved(true);
 		Retailer r= em.merge(retailer);
 		return r;
 	}
@@ -91,6 +94,31 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return a;
 	}
 
+	@Transactional
+	public List<Product> fetcProductNotApproved() {
+		String jpql="select p from Product p where approved=0";
+		Query query=em.createQuery(jpql);
+		List<Product> p= query.getResultList();
+		return p;
+	}
+
+	@Transactional
+	public List<User> fetchUserNotApproved() {
+		String jpql="select p from User p where approved=0";
+		Query query=em.createQuery(jpql);
+		List<User> p= query.getResultList();
+		return p;
+	}
+
+	@Transactional
+	public List<Retailer> fetcRetailerNotApproved() {
+		String jpql="select p from Retailer p where Retailer_approved=0";
+		Query query=em.createQuery(jpql);
+		List<Retailer> p= query.getResultList();
+		return p;
+	}
+
+	
 
 
 }

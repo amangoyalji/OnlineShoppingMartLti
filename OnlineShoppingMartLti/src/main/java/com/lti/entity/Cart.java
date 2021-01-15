@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="shop_cart")
+@Table(name="shop_new_cart")
 public class Cart {
 
 	@Id
@@ -27,7 +28,9 @@ public class Cart {
 	long productId;
 	String productName;
 	String path;
-	@OneToOne
+	
+	
+	@ManyToOne
 	@JoinColumn(name="userId")
 	User user;
    
@@ -72,6 +75,8 @@ public class Cart {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
+	
 
 	@JsonIgnore
 	public User getUser() {

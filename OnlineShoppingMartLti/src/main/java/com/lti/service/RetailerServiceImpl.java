@@ -1,5 +1,7 @@
 package com.lti.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,11 @@ public class RetailerServiceImpl implements RetailerService {
 	public long retailerLogin(String retailerEmail, String retailerPassword) {
 		// TODO Auto-generated method stub
 		return retailerRepository.retailerLogin(retailerEmail, retailerPassword);
+	}
+	@Override
+	public List<Product> fetchProductByRetailerId(long retailerId) {
+		List<Product> lp = retailerRepository.fetchProductByRetailerId(retailerId);
+		return lp;
 	}
 
 
