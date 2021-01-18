@@ -16,6 +16,7 @@ import com.lti.entity.Product;
 import com.lti.entity.Retailer;
 import com.lti.entity.User;
 import com.lti.service.AdminService;
+import com.lti.service.EmailService;
 import com.lti.service.ProductService;
 import com.lti.service.RetailerService;
 import com.lti.service.UserService;
@@ -35,6 +36,9 @@ public class AdminResource {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@GetMapping(path = "/findAdminById/{adminId}")
 	public Admin findAdminById(@PathVariable("adminId") long adminId) {
@@ -56,6 +60,10 @@ public class AdminResource {
 	public Product approveProduct(@PathVariable long productId) {
 		Product product = productService.fetchProductbyProductId(productId);
 		Product p = adminService.approveProduct(product);
+		String email = p.getRetailer().getRetailerEmail();
+		String subj ="Product Approved ";
+		String message = "the request for product "+p.getProductName()+" request you submitted has been approved";
+		emailService.sendEmailForNewRegistration(email, message, subj);
 		return p;
 	}
 	
@@ -63,6 +71,10 @@ public class AdminResource {
 	public Retailer approveRetailer(@PathVariable long retailerId) {
 		Retailer retailer = retailerService.fetchRetailerbyId(retailerId);
 		Retailer r = adminService.approveRetailer(retailer);
+		String email = r.getRetailerEmail();
+		String subj ="Retailer Approved ";
+		String message = "the retailer "+r.getRetailerName()+" request you submitted has been approved now you can sucessfully login";
+		emailService.sendEmailForNewRegistration(email, message, subj);
 		return r;
 	}
 	
@@ -70,6 +82,10 @@ public class AdminResource {
 	public User approveUser(@PathVariable long userId) {
 		User user = userService.fetchUserById(userId);
 		User u = adminService.approveUser(user);
+		String email = u.getEmail();
+		String subj ="User Approved ";
+		String message = "the user "+u.getUserName()+" request you submitted has been approved now you can sucessfully login";
+		emailService.sendEmailForNewRegistration(email, message, subj);
 		return u;
 	}
 	

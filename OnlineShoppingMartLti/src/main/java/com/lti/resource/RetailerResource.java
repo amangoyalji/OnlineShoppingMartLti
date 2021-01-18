@@ -137,7 +137,15 @@ public class RetailerResource {
 	@GetMapping(value = "/retailerlogin/{email}/{password}")
 	public long retailerLogin(@PathVariable String email,@PathVariable String password)
 	{
-		return retailerService.retailerLogin(email, password);
+		long retailerId = retailerService.retailerLogin(email, password);
+		if(retailerId==0) {
+			return retailerId;
+		}
+		Retailer r = retailerService.fetchRetailerbyId(retailerId);
+		if(r.getRetailerApproved()==true) {
+			return retailerId;
+		}
+		return 0;
 	}
 	
 	@PostMapping(value="/addRetailer")

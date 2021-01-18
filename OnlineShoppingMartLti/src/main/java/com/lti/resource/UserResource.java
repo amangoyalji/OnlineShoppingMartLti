@@ -1,6 +1,7 @@
 package com.lti.resource;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import com.lti.entity.Order;
 import com.lti.entity.Product;
 import com.lti.entity.User;
 import com.lti.entity.WishList;
+import com.lti.service.EmailService;
 import com.lti.service.ProductService;
 import com.lti.service.UserService;
 
@@ -32,6 +34,9 @@ public class UserResource {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
 	public User addOrUpdateUserNotApproved(@RequestBody User user){
@@ -123,8 +128,26 @@ public class UserResource {
 			
 			userService.addProductInItems(i);
 		}
+		String email = user.getEmail();
+		String message ="Hi "+ user.getUserName()+" the your order placed successfully. the order Id is  "+oid;
+		String subj = "Purchase Request";
+		emailService.sendEmailForNewRegistration(email, message, subj);
 		
 		return oid;
+	}
+	
+	
+	@GetMapping(value="/forgetpassword/{userId}")
+	 public long fetchUserUsingUserId(@PathVariable("userId") long userId) {
+		// TODO Auto-generated method stub
+		User u =  userService.fetchUserById(userId);
+		Random rand = new Random();
+		long otp = rand.nextInt(899999) + 600000;
+		String email = u.getEmail();
+		String message ="Hi "+ u.getUserName()+" the otp for reseting the password is "+otp;
+		String subj = "Password Reset Request";
+		emailService.sendEmailForNewRegistration(email, message, subj);
+		return otp;
 	}
 	
 	
