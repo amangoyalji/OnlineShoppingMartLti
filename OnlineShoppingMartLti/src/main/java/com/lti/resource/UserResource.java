@@ -147,7 +147,24 @@ public class UserResource {
 		String message ="Hi "+ u.getUserName()+" the otp for reseting the password is "+otp;
 		String subj = "Password Reset Request";
 		emailService.sendEmailForNewRegistration(email, message, subj);
+		System.out.println(otp);
 		return otp;
+	}
+	
+	
+	
+	@GetMapping(value="/updatepassword/{userId}/{password}")
+	public boolean updatePassword(@PathVariable("userId") long userId,@PathVariable("password") String password){
+		User user2 = userService.fetchUserById(userId);
+	    user2.setPassword(password);
+	    userService.addOrUpdateUserNotApproved(user2);
+	    return true;
+	}
+	
+	
+	@GetMapping(value = "/viewOrders/{userId}")
+	public List<Items> viewOrderDetailsByUserId(@PathVariable long userId){
+		return userService.viewOrderDetailsByUserId(userId);
 	}
 	
 	

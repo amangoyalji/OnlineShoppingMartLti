@@ -35,5 +35,6 @@ public interface UserRepository {
 	    long removeFromWishList(WishList wish);
 	    Cart viewCartByProductId(long productId);
 	    WishList viewWishListByProductId(long productId);
+	    List<Items> viewOrderDetailsByUserId(long userId);
 	   
 }

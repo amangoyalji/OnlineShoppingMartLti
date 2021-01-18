@@ -70,6 +70,8 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.fetchOrderById(orderId);
 	}
+	
+	
 
 	@Override
 	public List<Items> fetchItemsByUserId(long userId) {
@@ -124,5 +126,11 @@ public class UserServiceImpl implements UserService {
 	public WishList viewWishListByProductId(long productId) {
 		// TODO Auto-generated method stub
 		return userRepository.viewWishListByProductId(productId);
+	}
+	
+	@Override
+	public List<Items> viewOrderDetailsByUserId(long userId) {
+		// TODO Auto-generated method stub
+		return userRepository.viewOrderDetailsByUserId(userId);
 	}
 }

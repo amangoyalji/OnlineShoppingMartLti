@@ -205,5 +205,16 @@ public class UserRepositoryImpl implements UserRepository {
 		
 	}
 	
+	
+	@Transactional
+	public List<Items> viewOrderDetailsByUserId(long userId) {
+		// TODO Auto-generated method stub
+		String jpql = "select i from Items i where i.userId =: userId";
+		TypedQuery<Items> query = em.createQuery(jpql,Items.class);
+		query.setParameter("userId", userId);
+		
+		return query.getResultList();
+	}
+	
 
 }
